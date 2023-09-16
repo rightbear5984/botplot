@@ -1,0 +1,35 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 샘플 데이터프레임 생성
+data = {'Value': [10, 12, 9, 11, 13, 8, 10, 12, 9, 11]}
+df = pd.DataFrame(data)
+
+# 박스 플롯 그리기
+plt.figure(figsize=(8, 6))
+sns.boxplot(data=df, y='Value')
+plt.title('Box Plot')
+plt.xlabel('Value')
+plt.ylabel('Temperature')
+
+# 평균, 표준편차, CpK 값 계산
+mean_value = df['Value'].mean()
+std_value = df['Value'].std()
+USL = 15
+LSL = 5
+Cpk = min((USL - mean_value) / (3 * std_value), (mean_value - LSL) / (3 * std_value))
+
+# 평균, 표준편차, CpK 값 플롯에 표시
+plt.axhline(mean_value, color='r', linestyle='--', label='Mean')
+plt.text(0.05, mean_value + 0.2, f'Mean: {mean_value:.2f}', color='r')
+plt.axhline(mean_value + std_value, color='g', linestyle='--', label='Std')
+plt.text(0.05, mean_value + std_value + 0.2, f'Std: {std_value:.2f}', color='g')
+plt.text(0.05, mean_value + std_value + 0.4, f'Cpk: {Cpk:.2f}', color='b')
+
+# 범례 표시
+plt.legend()
+
+# 그래프 출력
+plt.show()
